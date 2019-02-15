@@ -61,6 +61,7 @@ module.exports = (api, options) => {
     const host = args.host || process.env.HOST || projectDevServerOptions.host || defaults.host
     portfinder.basePort = args.port || process.env.PORT || projectBSOptions.port || projectDevServerOptions.port || defaults.port
     const proxy = projectBSOptions.proxy || projectDevServerOptions.proxy
+    const writeToDisk = projectBSOptions.writeToDisk || projectDevServerOptions.writeToDisk
     const port = await portfinder.getPortPromise()
 
     const urls = prepareURLs(
@@ -92,7 +93,7 @@ module.exports = (api, options) => {
       publicPath: projectBSOptions.baseUrl || options.baseUrl,
       quiet: true,
       noInfo: true,
-      stats: false,
+      writeToDisk: writeToDisk,
       reporter() { }
     })
     webpackMiddlewares.push(devMiddleware)
